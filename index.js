@@ -75,14 +75,14 @@ async function run() {
           description: updateToy.description,
         },
       };
-
-      app.delete("/toys/:id", async (req, res) => {
-        const id = req.params.id;
-        const query = { _id: new ObjectId(id) };
-        const result = await toyCollection.deleteOne(query);
-        res.send(result);
-      });
       const result = await toyCollection.updateOne(filter, toy, options);
+      res.send(result);
+    });
+
+    app.delete("/toys/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await toyCollection.deleteOne(query);
       res.send(result);
     });
 
