@@ -29,6 +29,16 @@ async function run() {
     const toyCollection = client.db("toyZone").collection("toys");
 
     app.get("/toys", async (req, res) => {
+      try {
+        const result = await toyCollection.find({}).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error("Error fetching toys:", error);
+        res.status(500).send("Internal Server Error");
+      }
+    });
+
+    app.get("/toys", async (req, res) => {
       const cursor = toyCollection.find({});
       const result = await cursor.limit(10).toArray();
       res.send(result);
